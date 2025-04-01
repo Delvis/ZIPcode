@@ -1,5 +1,5 @@
 ---
-title: "ZIP Code"
+title: "📨 ZIP Code 📬"
 subtitle: "A hands-on R session on Zero-Inflated Poisson and other models for rare primate behaviors"
 date: "April 2, 2025"
 author: "João d'Oliveira Coelho"
@@ -33,9 +33,9 @@ In primate behavior research, count data shows up everywhere—like tracking how
 
 So you can't just grab your dataset with a dependent count variable and run a linear regression on top:
 
-- Why? It assumes normality, but count data violates that assumption.
-- heteros kedasti city: In count data, variance often increases with the mean.
-- A standard linear model can predict **impossible values** (e.g., negative counts), which doesn’t make sense in real-world scenarios.
+- Why? Well, linear Regression assumes normality, but count data violates that assumption.
+- Heteros kedasti city: In count data, variance often increases with the mean.
+- A standard linear model can predict **impossible values** (e.g., negative counts), which doesn’t make sense biologically or in real-world scenarios.
 :::
 
 ---
@@ -97,7 +97,7 @@ So, if we ask R to generate 1000 random numbers for the Poisson distribution wit
 
 ---
 
-## Salamander dataset
+## Salamander dataset 🦎
 
 ```r
 # Install if necessary
@@ -183,7 +183,7 @@ ggplot(Salamanders, aes(x = count)) +
 
 ---
 
-## Poisson model
+## Poisson model 📊
 
 ```r
 m1_pr <- glmmTMB(count ~ spp + mined + (1|site), data = Salamanders, family = poisson)
@@ -203,7 +203,7 @@ A random factor (or random effect) accounts for variation that we expect but don
 
 ---
 
-## Diagnosis of the Poisson model
+## Diagnosis of the Poisson model 🔎 
 
 ```r
 simulateResiduals(m1_pr, plot = TRUE)
@@ -238,7 +238,7 @@ If points deviate strongly from the 1:1 line, the model is struggling.
 
 ---
 
-## How to handle overdispersion?
+## How to handle overdispersion? 📉
 
 - **Overdispersion:** Variance > Mean
 - Poisson assumption often fails → underestimates SE, misleading p-values
@@ -256,7 +256,7 @@ If points deviate strongly from the 1:1 line, the model is struggling.
 
 ---
 
-## Negative Binomial model
+## Negative Binomial model 📈
 
 ```r
 m2_nb <- glmmTMB(count ~ spp + mined + (1|site), data = Salamanders, family = nbinom2)
@@ -276,7 +276,7 @@ summary(m2_nb)
 
 ---
 
-## Diagnosis of the Negative Binomial
+## Diagnosis of the Negative Binomial 🎯
 
 ```r
 simulateResiduals(m2_nb, plot = TRUE)
@@ -313,7 +313,7 @@ plot(res_m2)  # Only plots the residuals
 
 :::
 
-## Zero-Inflated Poisson model
+## Zero-Inflated Poisson model 🎈
 
 ```r
 m3_zip <- glmmTMB(count ~ spp + mined + (1|site), ziformula = ~mined + DOP + Wtemp, 
@@ -329,7 +329,7 @@ summary(m3_zip)
 
 ---
 
-## Zero-Inflated: under the hood
+## Zero-Inflated: under the hood ⚙️
 
 ```r
 zi_probs <- predict(m3_zip, type = "zprob")  # Probability of excess zeros
@@ -368,7 +368,7 @@ summary(m4_zinb)
 
 ---
 
-## Model comparison
+## Model comparison 🧮
 
 - Compare models using **AIC, residual plots, likelihood ratio tests**
 
@@ -515,7 +515,7 @@ ggplot(Salamanders, aes(x = count)) +
 
 ---
 
-## Thank you! Obrigado!
+## Thank you! Obrigado! 👋
 
 - github.com/Delvis/ZIPcode
 

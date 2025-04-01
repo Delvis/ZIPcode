@@ -3,7 +3,7 @@
     "path": "~/My R environment/zipcode/zipcode.qmd",
     "project_path": "zipcode.qmd",
     "type": "quarto_markdown",
-    "hash": "79855523",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1742542731511.0,
@@ -17,15 +17,15 @@
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
         "rmdVisualModeLocation": "2:0",
-        "cursorPosition": "466,3",
-        "scrollLine": "458"
+        "cursorPosition": "518,0",
+        "scrollLine": "510"
     },
     "folds": "",
-    "lastKnownWriteTime": 1743496563,
+    "lastKnownWriteTime": 1743501414,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1743496564089,
+    "last_content_update": 1743501414858,
     "read_only": false,
     "read_only_alternatives": []
 }

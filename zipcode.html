@@ -12,7 +12,7 @@
 
   <meta name="author" content="João d’Oliveira Coelho">
   <meta name="dcterms.date" content="2025-04-02">
-  <title>ZIP Code</title>
+  <title>📨 ZIP Code 📬</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -391,7 +391,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">ZIP Code</h1>
+  <h1 class="title">📨 ZIP Code 📬</h1>
   <p class="subtitle">A hands-on R session on Zero-Inflated Poisson and other models for rare primate behaviors</p>
 
 <div class="quarto-title-authors">
@@ -431,9 +431,9 @@ João d’Oliveira Coelho
 <p>In primate behavior research, count data shows up everywhere—like tracking how often an animal is aggressive or how often it is grooming another individual. Here are some examples, and obviously if you are observing and recording behaviours like these, you will get some zeros or maybe even a lot of zeros.</p>
 <p>So you can’t just grab your dataset with a dependent count variable and run a linear regression on top:</p>
 <ul>
-<li>Why? It assumes normality, but count data violates that assumption.</li>
-<li>heteros kedasti city: In count data, variance often increases with the mean.</li>
-<li>A standard linear model can predict <strong>impossible values</strong> (e.g., negative counts), which doesn’t make sense in real-world scenarios.</li>
+<li>Why? Well, linear Regression assumes normality, but count data violates that assumption.</li>
+<li>Heteros kedasti city: In count data, variance often increases with the mean.</li>
+<li>A standard linear model can predict <strong>impossible values</strong> (e.g., negative counts), which doesn’t make sense biologically or in real-world scenarios.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -501,7 +501,7 @@ João d’Oliveira Coelho
       }</style></aside>
 </section>
 <section id="salamander-dataset" class="slide level2">
-<h2>Salamander dataset</h2>
+<h2>Salamander dataset 🦎</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Install if necessary</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"glmmTMB"</span>, <span class="st">"ggplot2"</span>, <span class="st">"DHARMa"</span>))</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
@@ -564,7 +564,7 @@ João d’Oliveira Coelho
 
 <img data-src="zipcode_files/figure-revealjs/unnamed-chunk-4-1.png" width="1344" class="r-stretch"></section>
 <section id="poisson-model" class="slide level2">
-<h2>Poisson model</h2>
+<h2>Poisson model 📊</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>m1_pr <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(count <span class="sc">~</span> spp <span class="sc">+</span> mined <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>site), <span class="at">data =</span> Salamanders, <span class="at">family =</span> poisson)</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">summary</span>(m1_pr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
@@ -612,7 +612,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       }</style></aside>
 </section>
 <section id="diagnosis-of-the-poisson-model" class="slide level2">
-<h2>Diagnosis of the Poisson model</h2>
+<h2>Diagnosis of the Poisson model 🔎</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">simulateResiduals</span>(m1_pr, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <img data-src="zipcode_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><aside class="notes">
@@ -643,7 +643,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       }</style></aside>
 </section>
 <section id="how-to-handle-overdispersion" class="slide level2">
-<h2>How to handle overdispersion?</h2>
+<h2>How to handle overdispersion? 📉</h2>
 <ul>
 <li><strong>Overdispersion:</strong> Variance &gt; Mean</li>
 <li>Poisson assumption often fails → underestimates SE, misleading p-values</li>
@@ -670,7 +670,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       }</style></aside>
 </section>
 <section id="negative-binomial-model" class="slide level2">
-<h2>Negative Binomial model</h2>
+<h2>Negative Binomial model 📈</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>m2_nb <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(count <span class="sc">~</span> spp <span class="sc">+</span> mined <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>site), <span class="at">data =</span> Salamanders, <span class="at">family =</span> nbinom2)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="fu">summary</span>(m2_nb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
@@ -722,7 +722,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       }</style></aside>
 </section>
 <section id="diagnosis-of-the-negative-binomial" class="slide level2">
-<h2>Diagnosis of the Negative Binomial</h2>
+<h2>Diagnosis of the Negative Binomial 🎯</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">simulateResiduals</span>(m2_nb, <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <img data-src="zipcode_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
@@ -765,7 +765,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
       }</style></aside>
 </section>
 <section id="zero-inflated-poisson-model" class="slide level2">
-<h2>Zero-Inflated Poisson model</h2>
+<h2>Zero-Inflated Poisson model 🎈</h2>
 <div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>m3_zip <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(count <span class="sc">~</span> spp <span class="sc">+</span> mined <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>site), <span class="at">ziformula =</span> <span class="sc">~</span>mined <span class="sc">+</span> DOP <span class="sc">+</span> Wtemp, </span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="at">data =</span> Salamanders, <span class="at">family =</span> poisson)</span>
 <span id="cb13-3"><a href="#cb13-3"></a><span class="fu">summary</span>(m3_zip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -811,7 +811,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </section>
 <section id="zero-inflated-under-the-hood" class="slide level2">
-<h2>Zero-Inflated: under the hood</h2>
+<h2>Zero-Inflated: under the hood ⚙️</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>zi_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(m3_zip, <span class="at">type =</span> <span class="st">"zprob"</span>)  <span class="co"># Probability of excess zeros</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="fu">ggplot</span>(Salamanders, <span class="fu">aes</span>(<span class="at">x =</span> mined, <span class="at">y =</span> zi_probs)) <span class="sc">+</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(count <span class="sc">==</span> <span class="dv">0</span>)), <span class="at">width =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
@@ -867,7 +867,7 @@ Wtemp         -0.2229     0.3414  -0.653    0.514</code></pre>
 </div>
 </section>
 <section id="model-comparison" class="slide level2">
-<h2>Model comparison</h2>
+<h2>Model comparison 🧮</h2>
 <ul>
 <li>Compare models using <strong>AIC, residual plots, likelihood ratio tests</strong></li>
 </ul>
@@ -933,7 +933,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 <img data-src="zipcode_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
 <section id="thank-you-obrigado" class="slide level2">
-<h2>Thank you! Obrigado!</h2>
+<h2>Thank you! Obrigado! 👋</h2>
 <ul>
 <li>github.com/Delvis/ZIPcode</li>
 </ul>
