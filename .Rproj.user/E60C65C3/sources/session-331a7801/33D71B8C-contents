@@ -1,0 +1,76 @@
+# Install if necessary
+install.packages(c("glmmTMB", "ggplot2", "DHARMa"))
+
+# Load libraries
+library(glmmTMB) # For modeling
+library(ggplot2) # For visualizations
+library(DHARMa)  # For residual diagnostics
+
+
+data(Salamanders)
+str(Salamanders)
+summary(Salamanders)
+
+sum(Salamanders$count == 0) / nrow(Salamanders)  # Proportion of zeros
+
+ggplot(Salamanders, aes(x = count)) +
+  geom_histogram(binwidth = 1) +
+  theme_minimal() + labs(x = "Specimen count", y = "Frequency")
+
+ggplot(Salamanders, aes(x = mined, y = count)) +
+  geom_boxplot(fill = "tomato", alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Salamander Counts by Mining Status", x = "Mining", y = "Count")
+
+m1_pr <- glmmTMB(count ~ spp + mined + (1|site), data = Salamanders, family = poisson)
+summary(m1_pr)
+
+simulateResiduals(m1_pr, plot = TRUE)
+
+
+m2_nb <- glmmTMB(count ~ spp + mined + (1|site), data = Salamanders, family = nbinom2)
+summary(m2_nb)
+
+anova(m1_pr, m2_nb, test = "Chisq")  # Compare Poisson vs. NB
+
+m3_zip <- glmmTMB(count ~ spp + mined + (1|site), ziformula = ~mined + DOP + Wtemp, data = Salamanders, family = poisson)
+m4_zinb <- glmmTMB(count ~ spp + mined + (1|site), ziformula = ~mined + DOP + Wtemp, data = Salamanders, family = nbinom2)
+
+AIC(m1_pr, m2_nb, m3_zip, m4_zinb)
+
+Salamanders$pred_nb <- predict(m2_nb, type = "response")
+
+ggplot(Salamanders, aes(x = mined, y = count)) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  geom_boxplot(aes(y = pred_nb), fill = "blue", alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "Model Predictions (Negative Binomial)", x = "Mining", y = "Count")
+
+
+
+library(dplyr)
+library(ggplot2)
+
+# Generate predictions for all models
+Salamanders <- Salamanders %>%
+  mutate(
+    pred_pr = predict(m1_pr, type = "response"),
+    pred_nb = predict(m2_nb, type = "response"),
+    pred_zip = predict(m3_zip, type = "response"),
+    pred_zinb = predict(m4_zinb, type = "response")
+  )
+
+# Plot observed vs. predicted
+ggplot(Salamanders, aes(x = count)) +
+  geom_histogram(binwidth = 1, alpha = 0.5, color = "white") +
+  geom_density(aes(x = pred_pr, y = ..count..), color = "#2980b9", size = 1.2, linetype = "dashed") +
+  geom_density(aes(x = pred_nb, y = ..count..), color = "#c0392b", size = 1.2, linetype = "dashed") +
+  geom_density(aes(x = pred_zip, y = ..count..), color = "#8e44ad", size = 1.2, linetype = "dotted") +
+  geom_density(aes(x = pred_zinb, y = ..count..), color = "#16a085", size = 1.2) +
+  theme_minimal() +
+  labs(
+    title = "Observed vs. Predicted Count Distributions",
+    x = "Salamander Count",
+    y = "Density",
+    caption = "Blue = Poisson, Red = NB, Purple = ZIP, Green = ZINB"
+  )
